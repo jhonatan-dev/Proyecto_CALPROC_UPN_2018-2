@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="description" content="Préstamos y Pagos" />
+<meta name="author" content="Calidad y Procesos de Software" />
+<link rel="icon" th:href="@{/images/favicon.ico}" />
+<title>Simulador Pr&eacute;stamos y Pagos</title>
+<link rel="stylesheet"
+	th:href="@{/css/jquery-ui.min.css}" />
+<!-- Bootstrap 4.0-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}" />
+<!-- Bootstrap-extend -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap-extend.css}" />
+<!-- theme style -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/master_style.css}" />
+<!-- Crypto_Admin CSS -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/skins/_all-skins.css}" />
+<!-- jQuery 3 -->
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/jquery.min.js}"></script>
+<!-- popper -->
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/popper.min.js}"></script>
+<!-- Bootstrap 4.0-->
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/bootstrap.min.js}"></script>
+<!-- Slimscroll -->
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/jquery.slimscroll.min.js}"></script>
+<!-- FastClick -->
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/fastclick.js}"></script>
+<!-- webticker -->
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/jquery.webticker.min.js}"></script>
+<!-- Crypto_Admin JS -->
+<script type="text/javascript" charset="UTF-8"th:src="@{/js/template.js}"></script>
+<script type="text/javascript" charset="UTF-8"th:src="@{/js/demo.js}"></script>
+<!-- DataTables -->
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/DataTables/datatables.net/js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/DataTables/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/DataTables/media/js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/DataTables/extensions/Buttons/js/dataTables.buttons.min.js}"></script>
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/DataTables/extensions/Buttons/js/buttons.flash.min.js}"></script>
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/DataTables/ex-js/jszip.min.js}"></script>
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/DataTables/ex-js/pdfmake.min.js}"></script>
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/DataTables/ex-js/vfs_fonts.js}"></script>
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/DataTables/extensions/Buttons/js/buttons.html5.min.js}"></script>
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/DataTables/extensions/Buttons/js/buttons.print.min.js}"></script>
+<!-- jqBootstrapValidation for JQuery -->
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/jqBootstrapValidation.js}"></script>
+<!-- Formatter -->
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/formatter/formatter.min.js}"></script>
+<script type="text/javascript" charset="UTF-8" th:src="@{/js/formatter/jquery.formatter.min.js}"></script>
+</head>
+<body>
+	<header class="main-header" th:fragment="header">
+		<!-- Logo -->
+		<a th:href="@{/}" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+			<b class="logo-mini"> <span class="light-logo"> <img
+					th:src="@{/images/logo-light.png}" alt="logo"></span> <span
+				class="dark-logo"><img th:src="@{/images/logo-dark.png}"
+					alt="logo"></span>
+		</b> <!-- logo for regular state and mobile devices --> <span
+			class="logo-lg"> <img th:src="@{/images/logo-light-text.png}"
+				alt="logo" class="light-logo"> <img
+				th:src="@{/images/logo-dark-text.png}" alt="logo" class="dark-logo">
+		</span>
+		</a>
+		<!-- Header Navbar -->
+		<nav class="navbar navbar-static-top">
+			<!-- Sidebar toggle button-->
+			<a href="#" class="sidebar-toggle" data-toggle="push-menu"
+				role="button"> <span class="sr-only">Toggle navigation</span>
+			</a>
+
+			<div sec:authorize="isAuthenticated()" class="navbar-custom-menu">
+				<ul class="nav navbar-nav">
+
+					<!-- User Account -->
+					<li class="dropdown user user-menu"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown"> <img
+							th:src="@{/images/} + ${session.imagen_usuario}"
+							class="user-image rounded-circle" alt="Imagen de Usuario"
+							height="80" width="80">
+					</a>
+						<ul class="dropdown-menu scale-up">
+							<!-- User image -->
+							<li class="user-header"><img
+								th:src="@{/images/} + ${session.imagen_usuario}"
+								class="float-left rounded-circle" alt="Imagen de Usuario"
+								height="80" width="80">
+								<p>
+								<span sec:authentication="name"></span>
+								<small class="mb-5" sec:authentication="principal.authorities"></small>
+								</p></li>
+							<!-- Menu Body -->
+							<li class="user-body">
+								<div class="row no-gutters">
+									<div role="separator" class="divider col-12"></div>
+									<div role="separator" class="divider col-12"></div>
+									<div class="col-12 text-left">
+										<form id="logoutForm" th:action="@{/logout}" method="POST">
+											<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+											<a href="#" onclick="document.getElementById('logoutForm').submit();"><i class="fa fa-power-off"></i>Cerrar Sesión</a>
+										</form>
+									</div>
+								</div> <!-- /.row -->
+							</li>
+						</ul></li>
+					<!-- Control Sidebar Toggle Button -->
+					<li><a href="#" data-toggle="control-sidebar"><i
+							class="fa fa-cog fa-spin"></i></a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<aside class="main-sidebar" th:fragment="menu">
+		<section class="sidebar">
+			<div sec:authorize="isAuthenticated()" class="user-panel">
+				<div class="ulogo">
+					<a th:href="@{/}"> <span><b>Pr&eacute;stamos </b> y Pagos</span></a>
+				</div>
+				<div class="image">
+					<img th:src="@{/images/} + ${session.imagen_usuario}"
+						class="rounded-circle" alt="Imagen de Usuario" height="160"
+						width="160">
+				</div>
+				<div class="info">
+					<p><span sec:authentication="name"></span></p>
+				</div>
+			</div>
+			<ul class="sidebar-menu" data-widget="tree">
+				<li class="nav-devider"></li>
+				<li><a th:href="@{/}"> <i class="icon-home"></i> <span>Inicio</span>
+						<span class="pull-right-container"> <i
+							class="fa fa-angle-right pull-right"></i>
+					</span>
+				</a></li>
+				
+				<li sec:authorize="hasRole('ROLE_ANALISTA')" class="header nav-small-cap">PR&Eacute;STAMOS</li>
+				<li sec:authorize="hasRole('ROLE_ANALISTA')"><a th:href="@{/} + prestamo + '/'"> <i
+						class="fa fa-money"></i> <span>Realizar Pr&eacute;stamo</span> <span
+						class="pull-right-container"> <i
+							class="fa fa-angle-right pull-right"></i>
+					</span>
+				</a></li>
+				
+				<li sec:authorize="hasRole('ROLE_CAJERO')" class="header nav-small-cap">PAGOS</li>
+				<li sec:authorize="hasRole('ROLE_CAJERO')"><a th:href="@{/} + pago + '/'"> <i
+						class="icon-notebook"></i> <span>Realizar Pago Pr&eacute;stamo</span> <span
+						class="pull-right-container"> <i
+							class="fa fa-angle-right pull-right"></i>
+					</span>
+				</a></li>
+				
+				<!--
+				<li sec:authorize="hasRole('ROLE_CAJERO')" class="header nav-small-cap">CLIENTES</li>
+				<li sec:authorize="hasRole('ROLE_CAJERO')"><a th:href="@{/} + cliente + '/'"> <i
+						class="icon-people"></i> <span>Registrar Cliente</span> <span
+						class="pull-right-container"> <i
+							class="fa fa-angle-right pull-right"></i>
+					</span>
+				</a></li>
+				-->
+							
+			</ul>
+		</section>
+	</aside>
+
+	<footer class="main-footer" th:fragment="footer">
+		&copy; 2019 <a href="http://www.upn.edu.pe/"> -  Evolución y Configuración de Software</a>. Todos
+		los derechos reservados.
+	</footer>
+
+	<aside class="control-sidebar control-sidebar-dark" th:fragment="about">
+		<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+			<li class="nav-item"><a href="#control-sidebar-home-tab"
+				data-toggle="tab"><i class="fa fa-info-circle"></i></a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane" id="control-sidebar-home-tab">
+				<h3 class="control-sidebar-heading">Acerca de la WebApp</h3>
+				<h2 class="control-sidebar-subheading ">Desarrollado por:</h2>
+				<img th:src="@{/images/brain.png}" alt="Computer Brain Photo"
+					align="middle"></img>
+				<p></p>
+				<ul>
+					<li><p>Castillo Salvador, Jhonatan</p></li>
+					<li><p>Gallegos Ortiz, José Antonio</p></li>
+				</ul>
+			</div>
+		</div>
+	</aside>
+
+	<div class="control-sidebar-bg" th:fragment="about2"></div>
+
+	<script type="text/javascript" charset="UTF-8" th:fragment="customJS1">
+		$('.sidebar-menu > li > a').click(function() {
+			$(this).parent().addClass("active");
+		});
+	</script>
+	
+	
+
+	<script type="text/javascript" charset="UTF-8" th:fragment="customJS2">
+		/*Customiza las tablas*/
+		$(function() {
+			lastColum = ($("#tabla > tbody > tr:first > td").length) - 1;
+			"use strict";
+			$('#tabla')
+					.DataTable(
+							{
+								'language' : {
+									"url" : "http://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+								},
+								'paging' : true,
+								'lengthChange' : true,
+								'searching' : false,
+								'ordering' : false,
+								'info' : true,
+								'autoWidth' : true,
+								responsive : true,
+								'lengthMenu' : [ [ 10, 25, 50, 100, -1 ],
+										[ 10, 25, 50, 100, "Todos" ] ],
+								'order' : [ [ 0, 'asc' ] ],
+								'columnDefs' : [ {
+									"width": "15%",
+									"searchable" : false,
+									"orderable" : false,
+									"targets" : lastColum
+								}, {
+									"searchable" : false,
+									"targets" : 0
+								}, {
+									"targets" : '_all',
+									"className" : "text-center"
+								} ],
+							//Exportar tabla
+							dom: 'Bfrtip',
+							buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+							});
+		});
+	</script>
+	
+	<script type="text/javascript" charset="UTF-8" th:fragment="customJS3">
+	/*Validaciones*/
+	!function(window, document, $) {
+		"use strict";
+		$("input,select,textarea").not("[type=submit], [type=hidden]").jqBootstrapValidation();
+	}(window, document, jQuery);
+	</script>
+	
+	<script type="text/javascript" charset="UTF-8" th:fragment="customJS4">
+		// Mask / Formatter
+		$(function () {
+		  'use strict';
+			
+			//Date dd/mm/yyyy
+			$('#date').formatter({
+			  'pattern': '{{99}}/{{99}}/{{9999}}',
+			  'persistent': true
+			});
+			
+			//Time hh:mm
+			$('#time').formatter({
+			  'pattern': '{{99}}:{{99}}',
+			  'persistent': true
+			});
+			
+			//Date time dd/mm/yyyy hh:mm
+			$('#date-time').formatter({
+			  'pattern': '{{99}}/{{99}}/{{9999}} {{99}}:{{99}}',
+			  'persistent': true
+			});
+			
+			//Phone E.g. (123) 456-7890
+			$('#phone').formatter({
+			  'pattern': '({{999}}) {{999}}-{{9999}}',
+			  'persistent': true
+			});
+			
+			//Phone 2 E.g. +1 123-456-7890
+			$('#phone2').formatter({
+			  'pattern': '+1 {{999}}-{{999}}-{{999}}',
+			  'persistent': true
+			});
+			
+			//Percent E.g. %25.36
+			$('#percent').formatter({
+			  'pattern': '%{{99}}.{{99}}',
+			  'persistent': true
+			});
+			
+			//Username 8 character
+			$('#username').formatter({
+			  'pattern': '{{aaaaaaaa}}',
+			  'persistent': true
+			});
+			
+			//Price E.g. $ 999.99
+			$('#price').formatter({
+			  'pattern': '$ {{999}}.{{99}}',
+			  'persistent': true
+			});
+
+			//Credit card
+			$('#creditcard').formatter({
+			  'pattern': '{{9999}}-{{9999}}-{{9999}}-{{9999}}',
+			  'persistent': true
+			});
+			
+			//SSN E.g. 123-45-6789
+			$('#ssn').formatter({
+			  'pattern': '{{999}}-{{99}}-{{9999}}',
+			  'persistent': true
+			});
+			
+			//SSN E.g. 1234-1234-1234-1234
+			$('#ssn2').formatter({
+				  'pattern': '{{9999}}-{{9999}}-{{9999}}-{{9999}}',
+				  'persistent': true
+			});
+			
+			//Product key E.g. PN 123 4567
+			$('#productkey').formatter({
+			  'pattern': 'P{{a}} {{999}} {{9999}}',
+			  'persistent': true
+			});
+			
+		});// End of use strict
+	</script>
+
+	<div th:fragment="customMessages">
+		<div class="box-header alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+		<div class="box-header alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+		<div class="box-header alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+		<div class="box-header alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+	</div>
+
+</body>
+</html>

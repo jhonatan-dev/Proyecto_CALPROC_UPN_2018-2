@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body class="hold-transition">
+	<div class="error-body">
+		<div class="error-page">
+
+			<div class="error-content">
+				<div class="container">
+
+					<h2 class="headline text-yellow" th:text="'404'"></h2>
+
+					<h3 class="margin-top-0" th:text="'NO ENCONTRADO!'"><i class="fa fa-warning text-yellow"></i></h3>
+
+					<p>Estimado <span th:text="${#httpServletRequest.remoteUser}"></span> <span th:text="' - El recurso solicitado no se encuentra disponible.'"></span></p>
+
+					<div class="text-center">
+						<a th:href="@{/}" class="btn btn-info btn-block margin-top-10">Ir al Inicio</a>
+					</div>
+					
+				</div>
+			</div>
+			<!-- /.error-content -->
+			<footer th:replace="layout/layout :: footer"></footer>
+		</div>
+		<!-- /.error-page -->
+	</div>
+
+</body>
+</html>

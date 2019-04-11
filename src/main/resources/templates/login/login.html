@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body class="hold-transition login-page">
+	<div class="login-box">
+	  <div class="login-logo">
+	    <a th:href="@{/}"> <span><b>Pr&eacute;stamos </b> y Pagos</span></a>
+	  </div>
+	  <!-- /.login-logo -->
+	  <div class="login-box-body">
+	  	
+	  	<p th:if="${success != null}" class="login-box-msg text-green" th:text="${success}"></p>
+	    <p th:if="${error == null}" class="login-box-msg">Inicia Sesi&oacute;n para ingresar al Sistema</p>
+		<p th:unless="${error == null}" class="login-box-msg text-red" th:text="${error}"></p>
+		
+	    <form th:action="@{/login}" method="POST" class="form-element">
+	      <div class="form-group has-feedback">
+	        <input name="username" id="username" type="text" class="form-control" placeholder="Nombre de Usuario" minlength="3" required aria-invalid="true" data-validation-required-message="Este campo es requerido." data-validation-minlength-message="Longitud de la cadena debe ser mayor o igual a 3 caracteres."/>
+	        <span class="ion ion-person form-control-feedback"></span>
+	        <div class="help-block"></div>
+	      </div>
+	      <div class="form-group has-feedback">
+	        <input name="password" id="password" type="password" class="form-control" placeholder="Contrase&ntilde;a" minlength="6" required aria-invalid="true" data-validation-required-message="Este campo es requerido." data-validation-minlength-message="Longitud de la cadena debe ser mayor o igual a 6 caracteres."/>
+	        <span class="ion ion-locked form-control-feedback"></span>
+	        <div class="help-block"></div>
+	      </div>
+	      
+	      <div class="row">
+	        
+	        <!--  
+	        <div class="col-6">
+	          <div class="checkbox">
+	            <input type="checkbox" id="basic_checkbox_1" >
+				<label for="basic_checkbox_1">Recordarme</label>
+	          </div>
+	        </div>
+	        <div class="col-6">
+	         <div class="fog-pwd">
+	          	<a href="javascript:void(0)"><i class="ion ion-locked"></i> Forgot pwd?</a><br>
+	          </div>
+	        </div>
+	        -->
+	        
+	        <div class="col-12 text-center">
+	          <button type="submit" class="btn btn-info btn-block margin-top-10">Iniciar Sesi&oacute;n</button>
+	        </div>
+	      </div>
+	    </form>
+	
+	    <!--
+	    <div class="social-auth-links text-center">
+	      <p>- OR -</p>
+	      <a href="#" class="btn btn-social-icon btn-circle btn-facebook"><i class="fa fa-facebook"></i></a>
+	      <a href="#" class="btn btn-social-icon btn-circle btn-google"><i class="fa fa-google-plus"></i></a>
+	    </div>
+	    <div class="margin-top-30 text-center">
+	    	<p>Don't have an account? <a href="register.html" class="text-info m-l-5">Sign Up</a></p>
+	    </div>
+		-->
+		
+	  </div>
+	  <!-- /.login-box-body -->
+	</div>
+	<!-- /.login-box -->
+	
+	<script type="text/javascript" th:replace="layout/layout :: customJS3"></script>
+	
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body class="hold-transition skin-yellow sidebar-mini">
+	<div class="wrapper">
+		<!-- Header -->
+		<header th:replace="layout/layout :: header"></header>
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside th:replace="layout/layout :: menu"></aside>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1 th:text="${titulo}"></h1>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a th:href="@{/}"> <i class="fa fa-dashboard"></i>Inicio </a></li>
+					<li class="breadcrumb-item active" th:text="${titulo}"></li>
+				</ol>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+		        <!-- Basic Forms -->
+		        <div class="box box-solid bg-dark">
+		          <div th:replace="layout/layout :: customMessages"></div>
+		          <div class="box-header with-border">
+		            <h3 class="box-title" th:text="${titulo}"></h3>
+		          </div>
+		          <!-- /.box-header -->
+		          <div class="box-body">
+		            <div class="row">
+		              <div class="col-12">
+		              
+		              	<div th:object="${prestamopago}" th:remove="tag">
+							<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+								role="alert">
+								<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+							</ul>
+						</div>
+				
+				        <form th:action="@{/pago/formPrincipal}" th:object="${prestamopago}" method="POST" novalidate>
+							<div class="form-group row">
+								<label for="dni" class="col-sm-2 col-form-label">DNI del Cliente <span class="text-danger">*</span></label>
+								<div class="controls col-sm-10">									
+									<input id="dni" class="form-control" minlength="8" maxlength="8" type="text" th:errorclass="'form-control is-invalid'" th:field="*{cliente.persona.dni}" required aria-invalid="false" data-validation-required-message="Este campo es requerido." data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No se permiten caracteres, solo n&uacute;meros." data-validation-maxlength-message="Demasiado largo: El DNI son 8 n&uacute;meros." data-validation-minlength-message="Muy corto: El DNI son 8 n&uacute;meros."/>
+									<div class="help-block">
+										<span class="form-text text-danger" th:if="${#fields.hasErrors('cliente.persona.dni')}" th:errors="*{cliente.persona.dni}"></span>
+									</div>
+					            </div>
+							</div>
+							<div class="form-group row">
+								<label for="dni" class="col-sm-2 col-form-label">C&oacute;digo de Pr&eacute;stamo <span class="text-danger">*</span> <small><i>Ejm: 1234-1234-1234-1234</i></small></label>
+								<div class="controls col-sm-10">									
+									<input id="ssn2" class="form-control" th:field="*{codigo}" minlength="19" maxlength="19" type="text" th:errorclass="'form-control is-invalid'" data-validation-regex-regex="([0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4})" required aria-invalid="false" data-validation-required-message="Este campo es requerido." data-validation-maxlength-message="Demasiado largo: El C&oacute;digo del Pr&eacute;stamo son 19 caracteres." data-validation-minlength-message="El C&oacute;digo del Pr&eacute;stamo son 19 caracteres." data-validation-regex-message="Ingrese un C&oacute;digo de Pr&eacute;stamo V&aacute;lido."/>
+									<div class="help-block">
+										<span class="form-text text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></span>
+									</div>
+					            </div>
+							</div>
+							
+							<input class="form-control" type="hidden" th:value="1" th:name="numero_cuotas"/>
+							<input class="form-control" type="hidden" th:value="1.0" th:name="monto_a_financiar"/>
+							<input class="form-control" type="hidden" th:value="Efectivo" th:name="tipo_prestamo"/>
+							<input class="form-control" type="hidden" th:value="Extraordinaria" th:name="tipo_cuota"/>
+							
+					        <div class="text-lg-center">
+					        	<button type="submit" class="btn btn-info btn-block">Enviar</button>
+				            </div>
+						</form>
+						
+		              </div>
+		              <!-- /.col -->
+		            </div>
+		            <!-- /.row -->
+		          </div>
+		          <!-- /.box-body -->
+		        </div>
+		        <!-- /.box -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<footer th:replace="layout/layout :: footer"></footer>
+		<aside th:replace="layout/layout :: about"></aside>
+		<div th:replace="layout/layout :: about2"></div>
+		<script type="text/javascript" th:replace="layout/layout :: customJS1"></script>
+		<script type="text/javascript" th:replace="layout/layout :: customJS3"></script>
+		<script type="text/javascript" th:replace="layout/layout :: customJS4"></script>
+	</div>
+	<!-- ./wrapper -->
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body class="hold-transition skin-yellow sidebar-mini">
+	<div class="wrapper">
+		<!-- Header -->
+		<header th:replace="layout/layout :: header"></header>
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside th:replace="layout/layout :: menu"></aside>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1 th:text="${titulo}"></h1>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a th:href="@{/}"> <i class="fa fa-dashboard"></i>Inicio </a></li>
+					<li class="breadcrumb-item"><a th:href="@{/} + prestamo + '/'">Solicitar Pr&eacute;stamo</a></li>
+					<li class="breadcrumb-item"><a th:href="@{/} + prestamo + '/form' + ${prestamo.tipo_prestamo} + '/'" th:text="'Solicitar Pr&eacute;stamo ' + ${prestamo.tipo_prestamo}"></a></li>
+					<li class="breadcrumb-item active" th:text="${titulo}"></li>
+				</ol>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<div class="row">
+					<div class="col-12">
+						<div class="box box-solid bg-dark">
+							<div th:replace="layout/layout :: customMessages"></div>
+							<div class="box-header with-border">
+								<h3 class="box-title" th:text="'Cliente: ' + ${prestamo.cliente.persona.nombres} + ' ' + ${prestamo.cliente.persona.apellidos}"></h3>
+								<h5  th:text="'C&oacute;digo: ' + ${prestamo.codigo}"></h5>
+								<h5  th:text="'Producto: ' + ${prestamo.tipo_prestamo}"></h5>
+								<h5  th:text="'Fecha de Desembolso: ' + ${#dates.format(prestamo.fecha_desembolso, 'dd-MM-yyyy')}"></h5>
+								<h5  th:if="${prestamo.tipo_del_bien != null}" th:text="'Tipo de Bien: ' + ${prestamo.tipo_del_bien}"></h5>
+								<h5  th:if="${prestamo.tipo_del_bien != null}" th:text="'Tasa Seguro del Bien: ' + ${prestamo.tasa_seguro_del_bien} + ' fija mensual'"></h5>
+								<h5  th:text="'Valor del Bien: ' + ${prestamo.importe_asegurado} + ' soles'"></h5>
+								<h5  th:text="'Monto a Financiar: ' + ${prestamo.monto_a_financiar} + ' soles'"></h5>
+								<h5  th:text="'Tasa de Inter&eacute;s Compensatorio (TEA): ' + ${prestamo.tea} + ' anual'"></h5>
+								<h5  th:text="'Tipo de Cuota: ' + ${prestamo.tipo_cuota}"></h5>
+								<h5  th:text="'Plazo de Cr&eacute;dito: ' + ${prestamo.numero_cuotas} + ' meses'"></h5>
+								<h5  th:if="${prestamo.tipo_de_seguro_desgravamen != null}" th:text="'Tipo de Seguro de Desgravamen: ' + ${prestamo.tipo_de_seguro_desgravamen}"></h5>
+								<h5  th:text="'Tasa de Seguro de Desgravamen: ' + ${#numbers.formatDecimal(prestamo.tdes == null ? 0 : prestamo.tdes, 0, 2)} + ' mensual'"></h5>
+								<h5  th:text="'Comisi&oacute;n: ' + ${prestamo.costo_envio_a_casa} + ' soles'"></h5>
+							</div>
+							<!-- /.box-header -->
+							<div class="box-body">
+								<div class="table-responsive">
+									
+									<table id="tabla"
+										class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+										<thead>
+											<tr>
+												<th>Nro de Cuota</th>
+												<th>Fecha de Vencimiento</th>
+												<th>Saldo Inicial</th>
+												<th>Amortizaci&oacute;n</th>
+												<th>Inter&eacute;s</th>
+												<th>Seguro Desgravamen</th>
+												<th>Seguro Bien</th>
+												<th>Comisi&oacute;n</th>
+												<th>Monto de Cuota</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr align="center" th:each="cuota: ${prestamo.cuotas}">
+												<td th:text="${cuota.numero_cuota}"></td>
+												<td th:text="${#dates.format(cuota.fecha_vencimiento, 'dd-MM-yyyy')}"></td>
+												<td th:text="${#numbers.formatDecimal(cuota.saldo == null ? 0 : cuota.saldo, 0, 2)}"></td>
+												<td th:text="${#numbers.formatDecimal(cuota.amortizacion == null ? 0 : cuota.amortizacion, 0, 2)}"></td>
+												<td th:text="${#numbers.formatDecimal(cuota.interes_mensual == null ? 0 : cuota.interes_mensual, 0, 2)}"></td>
+												<td th:text="${#numbers.formatDecimal(cuota.seguro_desgravamen_mensual == null ? 0 : cuota.seguro_desgravamen_mensual, 0, 2)}"></td>
+												<td th:text="${#numbers.formatDecimal(cuota.seguro_del_bien == null ? 0 : cuota.seguro_del_bien, 0, 2)}"></td>
+												<td th:text="${#numbers.formatDecimal(cuota.prestamo.costo_envio_a_casa == null ? 0 : cuota.prestamo.costo_envio_a_casa, 0, 2)}"></td>
+												<td th:text="${#numbers.formatDecimal(cuota.cuota_fija == null ? 0 : cuota.cuota_fija, 0, 2)}"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+				
+		      <div class="row">
+		        <div class="col-12">
+		          <div class="box">
+		            <div class="box-body">
+						<div class="demo-checkbox">
+							<form th:action="@{/prestamo/guardarPrestamo}" method="POST">
+								<button type="submit" class="btn btn-block btn-info btn-lg" th:onclick="'location.href=\''+ @{/prestamo/guardarPrestamo}+'\''">Registrar Pr&eacute;stamo</button>
+							</form>
+						</div>
+		            </div>
+		            <!-- /.box-body -->
+		          </div>
+		          <!-- /.box -->
+		        </div>
+		        <!-- ./col -->
+		      </div>
+		      <!-- /.row -->
+
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<footer th:replace="layout/layout :: footer"></footer>
+		<aside th:replace="layout/layout :: about"></aside>
+		<div th:replace="layout/layout :: about2"></div>
+		<script type="text/javascript" th:replace="layout/layout :: customJS1"></script>
+		<script type="text/javascript" th:replace="layout/layout :: customJS2"></script>
+	</div>
+	<!-- ./wrapper -->
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body class="hold-transition skin-yellow sidebar-mini">
+	<div class="wrapper">
+		<!-- Header -->
+		<header th:replace="layout/layout :: header"></header>
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside th:replace="layout/layout :: menu"></aside>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					Inicio <small>Bienvenido</small>
+				</h1>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="@{/}"> <i
+							class="fa fa-dashboard"></i>Inicio
+					</a></li>
+					<li class="breadcrumb-item active">Bienvenido</li>
+				</ol>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+		        <div class="box box-solid bg-dark">
+		          <div th:replace="layout/layout :: customMessages"></div>
+		          
+		          <!-- +++++++++++++++++ AQUI DENTRO VA TODO LÓGICA +++++++++++++++++ -->
+		          
+		        </div>
+		        <!-- /.box -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<footer th:replace="layout/layout :: footer"></footer>
+		<aside th:replace="layout/layout :: about"></aside>
+		<div th:replace="layout/layout :: about2"></div>
+		<script type="text/javascript" th:replace="layout/layout :: customJS1"></script>
+	</div>
+	<!-- ./wrapper -->
+</body>
+</html>
